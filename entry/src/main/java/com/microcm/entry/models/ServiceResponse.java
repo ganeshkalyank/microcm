@@ -1,4 +1,4 @@
-package com.microcm.entry;
+package com.microcm.entry.models;
 
 import java.util.List;
 

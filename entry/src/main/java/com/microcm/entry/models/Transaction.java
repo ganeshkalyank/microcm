@@ -1,9 +1,12 @@
-package com.microcm.entry;
+package com.microcm.entry.models;
+
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Transaction {
@@ -11,6 +14,9 @@ public class Transaction {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long transaction_id;
     private String requested_service;
+
+    @OneToMany(mappedBy = "transaction")
+    private Set<Span> spans;
 
     public Long getTransaction_id() {
         return this.transaction_id;
