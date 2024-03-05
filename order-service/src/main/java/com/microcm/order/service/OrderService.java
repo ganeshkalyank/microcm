@@ -6,13 +6,14 @@ import com.microcm.order.model.Order;
 import com.microcm.order.model.OrderLineItems;
 import com.microcm.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 public class OrderService {
-
+    @Autowired
     private final OrderRepository orderRepository;
     public void placeOrder(OrderRequest orderRequest){
         Order order = new Order();
