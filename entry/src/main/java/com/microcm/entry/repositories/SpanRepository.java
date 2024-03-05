@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.microcm.entry.models.Span;
 
 public interface SpanRepository extends JpaRepository<Span, Long> {
-    List<Span> findByTransaction_id(Long transaction_id);
+    List<Span> findByTransactionId(Long transactionId);
 }

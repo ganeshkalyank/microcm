@@ -26,9 +26,9 @@ public class SpanController {
         this.spanRepository = spanRepository;
     }
 
-    @GetMapping("/span/{transaction_id}")
-    public ResponseEntity<SpanResponse> getSpansByTransaction(@PathVariable Long transaction_id) {
-        List<Span> spans = spanRepository.findByTransaction_id(transaction_id);
+    @GetMapping("/span")
+    public ResponseEntity<SpanResponse> getAllSpans() {
+        List<Span> spans = spanRepository.findAll();
         return new ResponseEntity<SpanResponse>(
             new SpanResponse(
                 "success",
@@ -39,8 +39,22 @@ public class SpanController {
         );
     }
     
-    @PostMapping("/span/{transaction_id}")
-    public ResponseEntity<SpanResponse> createSpan(@RequestBody Span s, @PathVariable Long transaction_id) {
+
+    @GetMapping("/span/{transactionId}")
+    public ResponseEntity<SpanResponse> getSpansByTransaction(@PathVariable Long transactionId) {
+        List<Span> spans = spanRepository.findByTransactionId(transactionId);
+        return new ResponseEntity<SpanResponse>(
+            new SpanResponse(
+                "success",
+                "Spans retrieved successfully!",
+                spans
+            ),
+            HttpStatus.OK
+        );
+    }
+    
+    @PostMapping("/span")
+    public ResponseEntity<SpanResponse> createSpan(@RequestBody Span s) {
         try {
             spanRepository.save(s);
             return new ResponseEntity<SpanResponse>(
