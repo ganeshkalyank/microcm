@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@SpringBootApplication(scanBasePackages = {"com.microcm.order"})
+@SpringBootApplication
 @ComponentScan("com.microcm.order.service")
 public class OrderApplication {
 
