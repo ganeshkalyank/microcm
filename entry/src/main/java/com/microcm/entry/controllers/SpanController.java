@@ -6,6 +6,7 @@ import com.microcm.entry.models.Span;
 import com.microcm.entry.models.SpanResponse;
 import com.microcm.entry.repositories.SpanRepository;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -56,12 +57,12 @@ public class SpanController {
     @PostMapping("/span")
     public ResponseEntity<SpanResponse> createSpan(@RequestBody Span s) {
         try {
-            spanRepository.save(s);
+            List<Span> newspan = Arrays.asList(spanRepository.save(s));
             return new ResponseEntity<SpanResponse>(
                 new SpanResponse(
                     "success",
                     "Span created successfully!",
-                    null
+                    newspan
                 ),
                 HttpStatus.OK
             );

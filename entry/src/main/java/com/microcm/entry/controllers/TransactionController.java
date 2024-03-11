@@ -1,5 +1,6 @@
 package com.microcm.entry.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -39,12 +40,12 @@ public class TransactionController {
     @PostMapping("/transactions")
     public ResponseEntity<ServiceResponse> createTransaction(@RequestBody Transaction t) {
         try {
-            transactionRepository.save(t);
+            List<Transaction> newtransaction = Arrays.asList(transactionRepository.save(t));
             return new ResponseEntity<ServiceResponse>(
                 new ServiceResponse(
                     "success", 
-                    "New transaction created!", 
-                    null
+                    "New transaction created!",
+                    newtransaction
                 ),
                 HttpStatus.OK
             );
