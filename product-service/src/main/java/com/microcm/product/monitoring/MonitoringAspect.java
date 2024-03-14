@@ -32,13 +32,29 @@ public class MonitoringAspect {
         transactionRequest.setRequestedService("product");
         
         ResponseEntity<TransactionResponse> response = restTemplate.postForEntity(uri, transactionRequest , TransactionResponse.class);
-        
+
+        TransactionResponse transactionResponse = response.getBody(); 
+        Transaction transaction = transactionResponse.getData().get(0);
+
         if(response.getStatusCode() == HttpStatus.OK){
             log.info("Succesfully created the transaction ID");   
-            TransactionResponse transactionResponse = response.getBody(); 
-            Transaction transaction = transactionResponse.getData().get(0);
             log.info("Transaction ID: {}", transaction.getTransactionId());
         }
+
+        String spanURI = "http://localhost:8080/span";
+        SpanRequest spanRequest = new SpanRequest();
+        spanRequest.setResponseTime(executionTime);
+        spanRequest.setTransactionId(transaction.getTransactionId());
+
+        ResponseEntity<SpanResponse> spanRes = restTemplate.postForEntity(spanURI, spanRequest, SpanResponse.class);
+        if(response.getStatusCode() == HttpStatus.OK){
+            log.info("Succesfully created the Span");   
+            SpanResponse spanResponse = spanRes.getBody(); 
+            Span span = spanResponse.getData().get(0);
+            log.info("Span ID: {}", span.getSpanId()); 
+        }
+
+
         log.info("{} executed in {} ms", joinPoint.getSignature(), executionTime);
         return result;
     }
