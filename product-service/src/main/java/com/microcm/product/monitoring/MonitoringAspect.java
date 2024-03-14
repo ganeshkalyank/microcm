@@ -30,13 +30,15 @@ public class MonitoringAspect {
 
         TransactionRequest transactionRequest = new TransactionRequest();
         transactionRequest.setRequestedService("product");
-
-        ResponseEntity<String> response = restTemplate.postForEntity(uri, transactionRequest , String.class);
-
+        
+        ResponseEntity<TransactionResponse> response = restTemplate.postForEntity(uri, transactionRequest , TransactionResponse.class);
+        
         if(response.getStatusCode() == HttpStatus.OK){
-            log.info("Succesfully created the transaction ID");
+            log.info("Succesfully created the transaction ID");   
+            TransactionResponse transactionResponse = response.getBody(); 
+            Transaction transaction = transactionResponse.getData().get(0);
+            log.info("Transaction ID: {}", transaction.getTransactionId());
         }
-
         log.info("{} executed in {} ms", joinPoint.getSignature(), executionTime);
         return result;
     }
