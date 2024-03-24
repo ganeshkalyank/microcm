@@ -4,33 +4,7 @@ import { entryapi } from "../utils/apis";
 
 const Transactions = () => {
 
-    const [transactions, setTransactions] = useState([
-        {
-            "transactionId": 1,
-            "requestedService": "A",
-            "invocationTime": "2021-09-01T00:00:00",
-        },
-        {
-            "transactionId": 2,
-            "requestedService": "B",
-            "invocationTime": "2021-09-02T00:00:00",
-        },
-        {
-            "transactionId": 3,
-            "requestedService": "C",
-            "invocationTime": "2021-09-03T00:00:00",
-        },
-        {
-            "transactionId": 4,
-            "requestedService": "D",
-            "invocationTime": "2021-09-04T00:00:00",
-        },
-        {
-            "transactionId": 5,
-            "requestedService": "E",
-            "invocationTime": "2021-09-05T00:00:00",
-        },
-    ]);
+    const [transactions, setTransactions] = useState([]);
 
     const fetchTransactions = async () => {
         try {
