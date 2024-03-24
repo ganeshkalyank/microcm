@@ -1,6 +1,5 @@
 package com.microcm.product.monitoring;
 
-import com.microcm.product.rabbitmq.Producer;
 import com.microcm.product.rabbitmq.RabbitMQConfig;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,8 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @RequiredArgsConstructor
 public class MonitoringAspect {
-    private Producer producer;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Around("execution(* com.microcm.product.controller.ProductController.*(..))")
     public Object measureExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable{
@@ -50,23 +50,23 @@ public class MonitoringAspect {
             log.info("Transaction ID: {}", transaction.getTransactionId());
         }
 
-        String spanURI = "http://localhost:8080/span";
+
 
         SpanRequest spanRequest = new SpanRequest();
         spanRequest.setResponseTime(executionTime);
         spanRequest.setTransactionId(transaction.getTransactionId());
 
-        // rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, "", spanRequest);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, "", spanRequest);
 
-        producer.sendSpan(spanRequest);
-
-        ResponseEntity<SpanResponse> spanRes = restTemplate.postForEntity(spanURI, spanRequest, SpanResponse.class);
-        if(response.getStatusCode() == HttpStatus.OK){
-            log.info("Successfully created the Span");
-            SpanResponse spanResponse = spanRes.getBody(); 
-            Span span = spanResponse.getData().get(0);
-            log.info("Span ID: {}", span.getSpanId()); 
-        }
+        // String spanURI = "http://localhost:8080/span";
+        
+        // ResponseEntity<SpanResponse> spanRes = restTemplate.postForEntity(spanURI, spanRequest, SpanResponse.class);
+        // if(response.getStatusCode() == HttpStatus.OK){
+        //     log.info("Successfully created the Span");
+        //     SpanResponse spanResponse = spanRes.getBody(); 
+        //     Span span = spanResponse.getData().get(0);
+        //     log.info("Span ID: {}", span.getSpanId()); 
+        // }
 
 
         log.info("{} executed in {} ms", joinPoint.getSignature(), executionTime);
