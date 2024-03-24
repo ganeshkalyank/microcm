@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react"
 import { entryapi } from "../utils/apis"
+import { useParams } from "react-router-dom"
 
 const TransactionDetails = () => {
 
     const [spans, setSpans] = useState([])
     const [averageResponseTime, setAverageResponseTime] = useState(0)
 
+    const { tid } = useParams();
+
     useEffect(() => {
         const fetchSpans = async () => {
             try {
-                const response = await entryapi.get("/span/2")
+                const response = await entryapi.get(`/span/${tid}`)
                 console.log(response)
                 setSpans(response.data.data)
                 setAverageResponseTime(spans.reduce((acc, span) => acc + span.responseTime, 0) / spans.length)
@@ -19,7 +22,7 @@ const TransactionDetails = () => {
             }
         }
         fetchSpans()
-    }, [spans])
+    }, [spans, tid])
 
     return (
         <div className="px-5 py-10 md:p-20">

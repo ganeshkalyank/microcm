@@ -7,7 +7,7 @@ import Transaction from './pages/Transaction'
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
-  { path: "/transactions/:id", element: <Transaction /> },
+  { path: "/transactions/:tid", element: <Transaction /> },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
