@@ -34,7 +34,7 @@ const Transactions = () => {
                                 <div>
                                     <p className="text-foreground">Transaction ID: {transaction.transactionId}</p>
                                     <p className="text-foreground">Requested Service: {transaction.requestedService}</p>
-                                    <p className="text-foreground">Invocation Time: {new Date("2021-09-05T00:00:00").toUTCString()}</p>
+                                    {/* <p className="text-foreground">Invocation Time: {new Date("2021-09-05T00:00:00").toUTCString()}</p> */}
                                 </div>
                                 <Link to={`/transactions/${transaction.transactionId}`} className="bg-primary flex items-center text-white px-5 py-2 rounded-lg">View</Link>
                             </div>
