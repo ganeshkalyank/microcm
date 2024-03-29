@@ -1,5 +1,7 @@
 package com.microcm.entry.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,4 +19,5 @@ public class Transaction {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long transactionId;
     private String requestedService;
+    private LocalDateTime invocationDateTime;
 }

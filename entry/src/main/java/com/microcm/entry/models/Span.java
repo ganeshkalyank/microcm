@@ -1,5 +1,7 @@
 package com.microcm.entry.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,4 +20,7 @@ public class Span {
     private Long spanId;
     private Long responseTime;
     private Long transactionId;
+    private LocalDateTime invocationDateTime;
+    private String requestedService;
+    private String parentService;
 }
