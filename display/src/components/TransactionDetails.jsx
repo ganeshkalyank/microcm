@@ -39,6 +39,9 @@ const TransactionDetails = () => {
                                     <p className="text-foreground">Span ID: {span.spanId}</p>
                                     <p className="text-foreground">Transaction ID: {span.transactionId}</p>
                                     <p className="text-foreground">Response Time: {span.responseTime} ms</p>
+                                    <p className="text-foreground">Requested Service: {span.requestedService}</p>
+                                    <p className="text-foreground">Parent Service: {span.parentService}</p>
+                                    <p className="text-foreground">Invocation Date Time: {span.invocationDateTime}</p>
                                 </div>
                             </div>
                         ))}
