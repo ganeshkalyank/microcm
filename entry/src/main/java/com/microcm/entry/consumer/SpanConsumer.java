@@ -24,6 +24,9 @@ public class SpanConsumer {
         Span span = new Span();
         span.setResponseTime(spanRequest.getResponseTime());
         span.setTransactionId(spanRequest.getTransactionId());
+        span.setInvocationDateTime(spanRequest.getInvocationDateTime());
+        span.setParentService(spanRequest.getParentService());
+        span.setRequestedService(spanRequest.getRequestedService());
         spanRepository.save(span);
         log.info("Span recieved: {}", data);
     }
