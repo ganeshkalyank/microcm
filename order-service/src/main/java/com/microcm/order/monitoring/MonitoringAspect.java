@@ -1,9 +1,6 @@
-package com.microcm.product.monitoring;
-
-import com.microcm.product.rabbitmq.RabbitMQConfig;
+package com.microcm.order.monitoring;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -31,7 +28,7 @@ public class MonitoringAspect {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @Around("execution(* com.microcm.product.controller.ProductController.*(..))")
+    @Around("execution(* com.microcm.order.controller.OrderController.*(..))")
     public Object measureExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable{
         long startTime = System.currentTimeMillis();
         Object result = joinPoint.proceed();
@@ -46,7 +43,7 @@ public class MonitoringAspect {
             String uri = "http://localhost:8080/transactions";
             RestTemplate restTemplate = new RestTemplate();
             TransactionRequest transactionRequest = new TransactionRequest();
-            transactionRequest.setRequestedService("product");
+            transactionRequest.setRequestedService("order");
             
             ResponseEntity<TransactionResponse> response = restTemplate.postForEntity(uri, transactionRequest , TransactionResponse.class);
     
@@ -70,7 +67,7 @@ public class MonitoringAspect {
         spanRequest.setTransactionId(Long.parseLong(transactionId));
         spanRequest.setInvocationDateTime(LocalDateTime.now());
         spanRequest.setParentService(parentService);
-        spanRequest.setRequestedService("product");
+        spanRequest.setRequestedService("order");
 
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, "", spanRequest);
 

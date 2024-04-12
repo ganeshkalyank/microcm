@@ -9,11 +9,11 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "orders_table")
+@Table(name = "order_table")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,5 +21,4 @@ public class Order {
     private String orderNum;
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderLineItems> orderLineItemsList;
-
 }

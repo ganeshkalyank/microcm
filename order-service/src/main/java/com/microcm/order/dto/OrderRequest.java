@@ -6,10 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class OrderRequest {
     private List<OrderLineItemsDto> orderLineItemsDtoList;
-
 }
